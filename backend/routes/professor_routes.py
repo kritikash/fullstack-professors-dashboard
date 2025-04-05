@@ -1,9 +1,12 @@
 from flask import Blueprint, jsonify, request, current_app
 from bson import ObjectId
+from flask_jwt_extended import jwt_required
+
 
 professor_bp = Blueprint('professors', __name__)
 
 @professor_bp.route("/", methods=["GET"])
+@jwt_required()
 def get_all_professors():
     mongo = current_app.mongo
     data = mongo.db.professors.find()
@@ -17,6 +20,7 @@ def get_all_professors():
 
 
 @professor_bp.route("/", methods=["POST"])
+@jwt_required()
 def add_professors():
     mongo = current_app.mongo
     data = request.get_json()
@@ -30,6 +34,7 @@ def add_professors():
 
 
 @professor_bp.route("/one", methods=["POST"])
+@jwt_required()
 def add_one_professor():
     mongo = current_app.mongo
     data = request.get_json()
@@ -41,6 +46,7 @@ def add_one_professor():
     return jsonify({"message": "One professor inserted"}), 201
 
 @professor_bp.route("/name/<name>", methods=["GET"])
+@jwt_required()
 def get_professor_by_name(name):
     mongo = current_app.mongo
     prof = mongo.db.professors.find_one({"name": name})
@@ -53,6 +59,7 @@ def get_professor_by_name(name):
 
 
 @professor_bp.route("/<professor_id>", methods=["PUT"])
+@jwt_required()
 def update_professor(professor_id):
     mongo = current_app.mongo
     data = request.get_json()
@@ -72,6 +79,7 @@ def update_professor(professor_id):
 
 
 @professor_bp.route("/<professor_id>", methods=["DELETE"])
+@jwt_required()
 def delete_professor(professor_id):
     mongo = current_app.mongo
 
