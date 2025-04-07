@@ -1,0 +1,319 @@
+<div class="dashboard-container">
+  <!-- Top Bar -->
+  <div class="top-bar">
+  <h1>Professor Profile Dashboard</h1>
+  <mat-form-field appearance="outline" class="professor-dropdown">
+    <mat-label>Select Professor</mat-label>
+    <mat-select [(value)]="selectedProfessor" (selectionChange)="onProfessorChange()">
+      <mat-option *ngFor="let prof of professors" [value]="prof.name">
+        {{ prof.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+  <!-- Summary Card -->
+  <mat-card class="summary-card" *ngIf="professor">
+    <div class="summary-header">
+      <div>
+        <h2>{{ professor.name }}</h2>
+        <div class="badges">
+          <span class="badge blue">h-index: {{ professor.h_index }}</span>
+          <span class="badge green">Citations: {{ professor.total_citations }}</span>
+          <span class="badge purple">Publications: 0</span>
+          <span class="badge yellow">Collaborators: 63</span>
+        </div>
+        <p><strong>Affiliations:</strong> {{ professor.affiliations }}</p>
+        <p><strong>ORCID:</strong> <a href="#">0000-0001-9292-8364</a></p>
+      </div>
+      <button mat-stroked-button color="primary" class="edit-button" (click)="openEditProfileDialog()">
+        Edit Profile
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- Tab Group -->
+  <mat-tab-group *ngIf="professor">
+    <mat-tab label="Overview">
+      <div class="overview-grid">
+        
+        <!-- Citation Trends -->
+        <mat-card class="overview-card citation-card">
+          <h3>Citation Trends</h3>
+          <p class="trend-down">-85.6% decrease from previous year</p>
+          <div class="metrics">
+            <div>Citations in 2023 <h4>{{ citations2023 }}</h4></div>
+            <div>Citations in 2024 <h4>{{ citations2024 }}</h4></div>
+            <div>Citations in 2025 <h4>{{ citations2025 }}</h4></div>
+          </div>
+          <canvas baseChart 
+                  [data]="citationChartData" 
+                  [options]="chartOptions" 
+                  chartType="bar"
+                  style="height: 250px;">
+          </canvas>
+        </mat-card>
+    
+        <!-- Publication Breakdown -->
+        <mat-card class="overview-card publication-card">
+          <h3>Publication Breakdown</h3>
+          <p class="subtle-text">Analysis of {{ getTotalPublications(types) }} publications</p>
+          
+          <div *ngFor="let t of getObjectEntries(types)" class="bar-row">
+            <span class="bar-label">Publication Types</span>
+            <mat-progress-bar [value]="t.value" mode="determinate"></mat-progress-bar>
+            <span class="bar-value">{{ t.key }}: {{ t.value }}</span>
+          </div>
+        </mat-card>
+    
+      </div>
+    
+      <!-- Co-Authors Table -->
+      <mat-card class="network-card" *ngIf="collaborators?.length">
+        <h3>Co-Authors Network</h3>
+        <p>{{ collaborators.length }} collaborators from 2012 to 2025</p>
+    
+        <table mat-table [dataSource]="collaborators" class="mat-elevation-z1 custom-table">
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Collaborator</th>
+            <td mat-cell *matCellDef="let c">
+              <div class="collaborator-cell">
+                <div class="initials-badge">{{ getInitials(c.name) }}</div>
+                <div class="collab-name">
+                  {{ c.name }}<br />
+                  <a [href]="c.id" target="_blank" rel="noopener noreferrer">Profile ↗</a>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+    
+          <!-- Co-Publications Column -->
+          <ng-container matColumnDef="co_publications">
+            <th mat-header-cell *matHeaderCellDef>Co-Publications</th>
+            <td mat-cell *matCellDef="let c"> {{ c.co_publications }} </td>
+          </ng-container>
+    
+          <!-- Co-Citations Column -->
+          <ng-container matColumnDef="co_citations">
+            <th mat-header-cell *matHeaderCellDef>Co-Citations</th>
+            <td mat-cell *matCellDef="let c"> {{ c.co_citations }} </td>
+          </ng-container>
+    
+          <!-- Years Column -->
+          <ng-container matColumnDef="years">
+            <th mat-header-cell *matHeaderCellDef>Years</th>
+            <td mat-cell *matCellDef="let c">
+              <div class="year-chips">
+                <mat-chip *ngFor="let y of c.years">{{ y }}</mat-chip>
+              </div>
+            </td>
+          </ng-container>
+    
+          <!-- Rank Column -->
+          <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef>Rank</th>
+            <td mat-cell *matCellDef="let c"> {{ c.rank }} </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card>
+    </mat-tab>
+    
+
+    <!-- Placeholder Tabs -->
+    <mat-tab label="Publications">
+      <div class="publications-section">
+        
+        <!-- Search Bar -->
+        <mat-form-field appearance="outline" class="search-bar">
+          <mat-label>Search by title or author...</mat-label>
+          <input matInput [(ngModel)]="searchQuery" placeholder="Search publications..." />
+        </mat-form-field>
+    
+        <!-- Publication Cards -->
+        <div *ngIf="filteredPublications.length > 0; else noResults">
+          <div *ngFor="let pub of filteredPublications" class="publication-card">
+            <div class="publication-header">
+              <h4>{{ pub.title }}</h4>
+              <a *ngIf="pub.doi" [href]="pub.doi" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+              </a>
+            </div>
+            <p class="authors">{{ pub.authors.join(', ') }}</p>
+    
+            <div class="labels">
+              <span class="year-badge">{{ pub.publication_year }}</span>
+              <span class="venue-badge">{{ pub.journal }}</span>
+              <span class="citation-badge">Citations: {{ pub.cited_by_count }}</span>
+              <span *ngIf="pub.is_oa" class="open-access-badge">Open Access</span>
+            </div>
+          </div>
+        </div>
+    
+        <ng-template #noResults>
+          <p>No matching publications found.</p>
+        </ng-template>
+    
+      </div>
+    </mat-tab>
+    
+    
+    <!-- Collaborators content -->
+    <mat-tab label="Collaborators">
+      <div class="collaborators-section">
+    
+        <h3>Co-Authors Network</h3>
+        <p>{{ collaborators?.length }} collaborators from 2012 to 2025</p>
+    
+        <table mat-table [dataSource]="collaborators" class="mat-elevation-z1 custom-table">
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Collaborator</th>
+            <td mat-cell *matCellDef="let c">
+              <div class="collaborator-cell">
+                <div class="initials-badge">{{ getInitials(c.name) }}</div>
+                <div class="collab-name">
+                  {{ c.name }}<br />
+                  <a [href]="c.id" target="_blank" rel="noopener noreferrer">Profile ↗</a>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+    
+          <!-- Co-Publications Column -->
+          <ng-container matColumnDef="co_publications">
+            <th mat-header-cell *matHeaderCellDef>Co-Publications</th>
+            <td mat-cell *matCellDef="let c"> {{ c.co_publications }} </td>
+          </ng-container>
+    
+          <!-- Co-Citations Column -->
+          <ng-container matColumnDef="co_citations">
+            <th mat-header-cell *matHeaderCellDef>Co-Citations</th>
+            <td mat-cell *matCellDef="let c"> {{ c.co_citations }} </td>
+          </ng-container>
+    
+          <!-- Years Column -->
+          <ng-container matColumnDef="years">
+            <th mat-header-cell *matHeaderCellDef>Years</th>
+            <td mat-cell *matCellDef="let c">
+              <div class="year-chips">
+                <mat-chip *ngFor="let y of c.years">{{ y }}</mat-chip>
+              </div>
+            </td>
+          </ng-container>
+    
+          <!-- Rank Column -->
+          <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef>Rank</th>
+            <td mat-cell *matCellDef="let c"> {{ c.rank }} </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    
+        <!-- Collaboration Frequency -->
+        <div class="collab-frequency">
+          <h4>Collaboration Frequency</h4>
+          <div class="frequency-grid">
+            <div class="frequency-box" *ngFor="let f of collaborationFrequency">
+              <div class="frequency-count">{{ f.count }}</div>
+              <div class="frequency-label">Collaborations in {{ f.year }}</div>
+            </div>
+          </div>
+        </div>
+
+    
+      </div>
+    </mat-tab>
+
+
+    <!-- Metrics -->
+
+    <div class="metrics-container"> 
+  <mat-tab label="Metrics">
+  <div class="metrics-grid">
+    
+    <!-- Citation Trends Card -->
+    <mat-card class="metrics-card citation-card">
+      <h3>Citation Trends</h3>
+      <p class="trend-down">-{{ percentChange }}% decrease from previous year</p>
+
+      <div class="metrics-box">
+        <div class="metric">
+          <div><strong>{{ citations2023 }}</strong></div>
+          <div>Citations in 2023</div>
+        </div>
+        <div class="metric">
+          <div><strong>{{ citations2024 }}</strong></div>
+          <div>Citations in 2024</div>
+        </div>
+        <div class="metric">
+          <div><strong>{{ citations2025 }}</strong></div>
+          <div>Citations in 2025</div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="citationChartData"
+          [options]="chartOptions"
+          chartType="bar">
+        </canvas>
+      </div>
+    </mat-card>
+
+    <!-- Publication Breakdown Card -->
+    <mat-card class="metrics-card">
+      <h3>Publication Breakdown</h3>
+      <p class="subtle-text">Analysis of All publications</p>
+
+      <div class="breakdown-container">
+        <!-- Types -->
+        <div class="breakdown-column">
+          <h5>Publication Types</h5>
+          <div *ngFor="let t of getObjectEntries(types)" class="bar-row">
+            <span class="bar-label">{{ t.key }}</span>
+            <mat-progress-bar [value]="t.value" mode="determinate" color="primary"></mat-progress-bar>
+            <span>{{ t.value }}</span>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="breakdown-column">
+          <h5>Languages</h5>
+          <div *ngFor="let l of getObjectEntries(languages)" class="bar-row">
+            <span class="bar-label">{{ l.key }}</span>
+            <mat-progress-bar [value]="l.value" mode="determinate" color="warn"></mat-progress-bar>
+            <span>{{ l.value }}</span>
+          </div>
+        </div>
+
+        <!-- Open Access -->
+        <div class="breakdown-column">
+          <h5>Open Access Status</h5>
+          <div *ngFor="let o of getObjectEntries(openAccess)" class="bar-row">
+            <span class="bar-label">{{ formatOAKey(o.key) }}</span>
+            <mat-progress-bar [value]="o.value" mode="determinate" color="warn"></mat-progress-bar>
+            <span>{{ o.value }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</mat-tab>
+</div>
+
+
+
+
+
+
+  </mat-tab-group>
+</div>

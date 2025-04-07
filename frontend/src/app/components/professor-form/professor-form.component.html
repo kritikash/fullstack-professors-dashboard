@@ -1,0 +1,12 @@
+<h2>Add Professor</h2>
+<div style="max-width: 700px; margin: auto;"> 
+<form (ngSubmit)="submit(profForm)" #profForm="ngForm">
+  <input type="text" name="name" [(ngModel)]="professor.name" placeholder="Name" required />
+  <input type="text" name="author_id" [(ngModel)]="professor.author_id" placeholder="Author ID" required />
+  <input type="text" name="affiliations" [(ngModel)]="professor.affiliations" placeholder="Affiliations" required />
+  <input type="number" name="h_index" [(ngModel)]="professor.h_index" placeholder="H-Index" required />
+  <input type="number" name="total_citations" [(ngModel)]="professor.total_citations" placeholder="Total Citations" required />
+  <textarea name="citation_trends" [(ngModel)]="professor.citation_trends" placeholder="Citation Trends (JSON)" rows="4"></textarea>
+  <button type="submit">Submit</button>
+</form>
+</div>

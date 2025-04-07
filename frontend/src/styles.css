@@ -1,0 +1,130 @@
+/* Base Typography Setup */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  color: #111827; /* near-black for sharp readability */
+  line-height: 1.6;
+  background-color: #f9fafb;
+}
+
+/* Header Fonts */
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+h5 {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* Section Labels / Subtext */
+.subtle-text,
+small,
+.label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Metric Boxes */
+.metrics-box .metric strong {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.metrics-box .metric div:last-child {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Badge Typography */
+.badge {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 10px;
+}
+
+/* Citation Trends Percentage */
+.trend-down {
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Table Header */
+.mat-header-cell {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+/* Table Cells */
+.mat-cell {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Chip Font */
+mat-chip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+}
+
+/* Progress Bar Labels */
+.bar-label,
+.bar-row span:last-child {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Publication Cards */
+.publication-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.authors {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.labels span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+
+body {
+  font-weight: bold;
+}
+
+

@@ -1,0 +1,616 @@
+/* GLOBAL DASHBOARD THEME BASED ON POLISHED DESIGN */
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  background-color: #f9fafb;
+  margin: 0;
+}
+
+.dashboard-container {
+  max-width: 2400px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ==================== HEADER ==================== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.professor-dropdown {
+  width: 250px;
+}
+
+/* ==================== SUMMARY CARD ==================== */
+.summary-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.summary-header h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.badge.blue { background-color: #3b82f6; }
+.badge.green { background-color: #10b981; }
+.badge.purple { background-color: #8b5cf6; }
+.badge.yellow { background-color: #facc15; color: #1e1e1e; }
+
+/* ==================== TABS ==================== */
+mat-tab-group {
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+mat-tab-header {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* ==================== OVERVIEW GRID ==================== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.overview-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  min-height: 380px;
+}
+
+.metrics {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.metrics div {
+  flex: 1;
+  background: #f1f5f9;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.metrics h4 {
+  margin: 0.25rem 0 0;
+  font-size: 1.25rem;
+}
+
+canvas {
+  margin-top: 1.5rem;
+  max-width: 100%;
+}
+
+/* ==================== PUBLICATION BREAKDOWN ==================== */
+.publications-section {
+  padding: 1.5rem;
+}
+
+.publications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem 0;
+}
+
+.search-bar input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+
+.controls button {
+  margin-left: 0.5rem;
+}
+
+.publication-card {
+  background-color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.publication-card:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.publication-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.title-block {
+  flex: 1;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.authors {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.external-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.external-link mat-icon {
+  font-size: 18px;
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.75rem;
+  font-size: 13px;
+}
+
+.labels span {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.year-badge {
+  background-color: #e0f2ff;
+  color: #1e3a8a;
+}
+
+.venue-badge {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+
+.citation-badge {
+  background-color: #fff3cd;
+  color: #92400e;
+}
+
+.open-access-badge {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Increase progress bar height globally or for specific use */
+::ng-deep mat-progress-bar {
+  height: 12px; /* adjust as needed, e.g., 12px or 16px */
+  border-radius: 6px;
+}
+
+/* Smooth out the fill style */
+::ng-deep .mat-progress-bar-fill::after {
+  border-radius: 6px;
+}
+
+
+
+
+/* ==================== CO-AUTHOR TABLE ==================== */
+.network-card {
+  background: #ffffff;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+}
+
+.year-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+mat-chip {
+  background-color: #fff;;
+  border-radius: 20px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+}
+
+.initials-badge {
+  background-color: #e0e7ff;
+  color: #1e40af;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.collaborator-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.frequency-box {
+  background: #f9fafb;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* ==================== METRICS ==================== */
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: none; 
+  margin: auto;
+}
+
+.metrics-card {
+  width: 100%;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+
+.metrics-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.metric {
+  flex: 1;
+  min-width: 200px;
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.chart-container {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.metrics-container {
+  width: 100%;
+  padding: 0 2rem; /* adjust as needed */
+}
+
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 100%; /* was 1100px, now 100% to allow full stretch */
+}
+
+
+/* Publication Breakdown Adjustments */
+.metrics-grid {
+  max-width: 1300px;
+  margin: auto;
+}
+
+.metrics-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.breakdown-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.breakdown-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.breakdown-column h5 {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.bar-label {
+  width: 90px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.bar-value {
+  min-width: 30px;
+  text-align: left;
+  font-weight: 500;
+}
+
+::ng-deep mat-progress-bar {
+  height: 10px;
+  border-radius: 6px;
+  flex-grow: 1;
+}
+
+::ng-deep .mat-primary .mat-progress-bar-fill::after {
+  background-color: #1d4ed8;
+}
+
+::ng-deep .mat-accent .mat-progress-bar-fill::after {
+  background-color: #059669;
+}
+
+::ng-deep .mat-warn .mat-progress-bar-fill::after {
+  background-color: #a855f7;
+}
+
+/* co-author */
+.network-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  width: 100%;
+}
+
+table.mat-table {
+  background-color: #fff !important;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mat-header-cell,
+.mat-cell {
+  padding: 12px;
+  font-size: 13px;
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  color: #1e1e1e;
+  background-color: #fff
+}
+
+.mat-row:nth-child(odd) {
+  background-color: #fff
+}
+
+.year-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+mat-chip {
+  background-color: #fff;
+  border-radius: 20px;
+  font-size: 12px;
+  padding: 0.2rem 0.7rem;
+}
+
+
+
+
+
+/* collaboration frequency */
+.collab-frequency {
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.frequency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.frequency-box {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.frequency-box:hover {
+  transform: translateY(-2px);
+}
+
+.frequency-count {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.frequency-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+
+.edit-button {
+  margin-top: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #1f2937;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #f3f4f6;
+  cursor: pointer;
+}
+
+
+/* table */
+table.mat-table {
+  background-color: #fff !important;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mat-header-row, .mat-row {
+  background-color: #fff !important;
+}
+
+.mat-cell, .mat-header-cell {
+  border-bottom: 1px solid #e5e7eb; /* subtle gray divider */
+  font-size: 14px;
+}
+.custom-table {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* metrics card */
+
+/* Metrics Container - Reduce width and spacing */
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  max-width: 880px; /* was 1100px - now narrower */
+  margin: auto;
+}
+
+/* Cards - Reduce padding and rounding */
+.metrics-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Mini summary cards */
+.metrics-box .metric {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 160px; /* smaller than before */
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-size: 14px;
+}
+
+/* Chart container - more compact */
+.chart-container {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Publication breakdown - bar row height */
+.breakdown-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.breakdown-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Bar styling */
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 13px;
+}
+
+.bar-label {
+  min-width: 60px;
+  text-align: right;
+  font-weight: 500;
+}
+
+::ng-deep mat-progress-bar {
+  height: 8px !important;
+  border-radius: 4px;
+}

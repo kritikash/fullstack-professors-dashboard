@@ -1,0 +1,13 @@
+<h2 class="text-xl font-semibold mb-4">Add New Professor</h2>
+<form (ngSubmit)="addProfessor()" class="space-y-4">
+  <input [(ngModel)]="professor.name" name="name" placeholder="Name" class="input" required />
+  <input [(ngModel)]="professor.author_id" name="author_id" placeholder="Author ID" class="input" required />
+  <input [(ngModel)]="professor.affiliations" name="affiliations" placeholder="Affiliations" class="input" required />
+  <input [(ngModel)]="professor.h_index" name="h_index" type="number" placeholder="H-Index" class="input" required />
+  <input [(ngModel)]="professor.total_citations" name="total_citations" type="number" placeholder="Total Citations" class="input" required />
+  
+  <!-- Optional: JSON text area for citation_trends -->
+  <textarea [(ngModel)]="professor.citation_trends" name="citation_trends" placeholder='Citation Trends (JSON)'></textarea>
+
+  <button type="submit" class="btn btn-primary">Add Professor</button>
+</form>
